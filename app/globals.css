@@ -1,26 +1,293 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+
+  --background: #0a0a0f;
+  --foreground: #e0e0e0;
+  --card: #12121a;
+  --muted: #1c1c2e;
+  --muted-foreground: #6b7280;
+  --accent: #00ff88;
+  --accent-secondary: #ff00ff;
+  --accent-tertiary: #00d4ff;
+  --border: #2a2a3a;
+  --input: #12121a;
+  --ring: #00ff88;
+  --destructive: #ff3366;
+
+  --shadow-neon: 0 0 5px #00ff88, 0 0 10px rgba(0, 255, 136, 0.4);
+  --shadow-neon-sm: 0 0 3px #00ff88, 0 0 6px rgba(0, 255, 136, 0.3);
+  --shadow-neon-lg: 0 0 10px #00ff88, 0 0 20px rgba(0, 255, 136, 0.4), 0 0 40px rgba(0, 255, 136, 0.2);
+  --shadow-neon-secondary: 0 0 5px #ff00ff, 0 0 20px rgba(255, 0, 255, 0.35);
+  --shadow-neon-tertiary: 0 0 5px #00d4ff, 0 0 20px rgba(0, 212, 255, 0.35);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-secondary: var(--accent-secondary);
+  --color-accent-tertiary: var(--accent-tertiary);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --font-heading: var(--font-orbitron);
+  --font-body: var(--font-jetbrains-mono);
+  --font-ui: var(--font-share-tech-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
+  min-height: 100vh;
+  margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body), monospace;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
+}
+
+body::after {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.05) 2px,
+    rgba(255, 255, 255, 0.08) 4px
+  );
+  opacity: 0.14;
+  z-index: 50;
+}
+
+::selection {
+  background: rgba(0, 255, 136, 0.2);
+  color: var(--foreground);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.cyber-chamfer {
+  clip-path: polygon(
+    0 10px,
+    10px 0,
+    calc(100% - 10px) 0,
+    100% 10px,
+    100% calc(100% - 10px),
+    calc(100% - 10px) 100%,
+    10px 100%,
+    0 calc(100% - 10px)
+  );
+}
+
+.cyber-chamfer-sm {
+  clip-path: polygon(
+    0 6px,
+    6px 0,
+    calc(100% - 6px) 0,
+    100% 6px,
+    100% calc(100% - 6px),
+    calc(100% - 6px) 100%,
+    6px 100%,
+    0 calc(100% - 6px)
+  );
+}
+
+.cyber-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1), border-color 150ms ease,
+    box-shadow 150ms ease;
+}
+
+.cyber-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-neon-sm);
+}
+
+.circuit-grid {
+  background-image:
+    linear-gradient(rgba(0, 255, 136, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 136, 0.05) 1px, transparent 1px);
+  background-size: 45px 45px;
+}
+
+.glow-border {
+  border: 1px solid rgba(0, 255, 136, 0.35);
+  box-shadow: 0 0 20px rgba(0, 255, 136, 0.12);
+}
+
+.glow-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border: 1px solid rgba(255, 0, 255, 0.12);
+  mix-blend-mode: screen;
+}
+
+.layout-section-bg {
+  background-image:
+    radial-gradient(circle at top left, rgba(0, 255, 136, 0.08), transparent 32%),
+    radial-gradient(circle at bottom right, rgba(255, 0, 255, 0.06), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+}
+
+.reveal-item {
+  opacity: 0;
+  transform: translateY(24px) scale(0.98);
+  transform-origin: top center;
+  transition: opacity 420ms cubic-bezier(0.22, 1, 0.36, 1), transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-item-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.cyber-glitch {
+  position: relative;
+  display: inline-block;
+  color: var(--foreground);
+  font-family: var(--font-heading), monospace;
+  text-shadow: 0 0 10px rgba(0, 255, 136, 0.25);
+}
+
+.cyber-glitch::before,
+.cyber-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  opacity: 0.75;
+}
+
+.cyber-glitch::before {
+  color: var(--color-accent-secondary);
+  text-shadow: -2px 0 0 var(--color-accent-secondary);
+  clip-path: inset(0 0 52% 0);
+  animation: rgbShift 3.2s ease-in-out infinite;
+}
+
+.cyber-glitch::after {
+  color: var(--color-accent-tertiary);
+  text-shadow: 2px 0 0 var(--color-accent-tertiary);
+  clip-path: inset(58% 0 0 0);
+  animation: rgbShift 3.2s ease-in-out infinite reverse;
+}
+
+.cyber-glitch:hover::before,
+.cyber-glitch:hover::after {
+  animation: glitch 0.4s steps(2, end) infinite;
+}
+
+.typewriter-text {
+  position: relative;
+  display: inline-flex;
+  gap: 0.2rem;
+  font-family: var(--font-ui), monospace;
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  color: var(--color-accent);
+  animation: blink 1s step-end infinite;
+}
+
+.typewriter-cursor-hidden {
+  opacity: 0;
+}
+
+.button-primary,
+.button-secondary,
+.button-ghost,
+.button-glitch {
+  border-style: solid;
+}
+
+.button-ghost {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.terminal-panel {
+  font-family: var(--font-body), monospace;
+  white-space: pre-wrap;
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes glitch {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(2px, -2px);
+  }
+  60% {
+    transform: translate(-1px, -1px);
+  }
+  80% {
+    transform: translate(1px, 1px);
+  }
+}
+
+@keyframes rgbShift {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
