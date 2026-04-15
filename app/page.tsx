@@ -131,7 +131,7 @@ const educationList = [
       {
         role: "Bachelor of Computer Science",
         period: "2016",
-        description: "Graduated with GPA 3.3.\nRelevant Coursework: Software Engineering, Hardware Programming, Algorithms, Data Structures, Database, Object-Oriented Programming, Design.",
+        description: "Graduated with GPA 3.3.\nRelevant Coursework includes Software Engineering, Hardware Programming, Algorithms, Data Structures, Database, Object-Oriented Programming, and Design. Building a strong foundation across both software and hardware disciplines.",
         skills: [],
       }
     ]
@@ -164,9 +164,9 @@ export default function Home() {
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[520px] bg-[radial-gradient(circle_at_top,_rgba(0,255,136,0.18),_transparent_45%)]" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-72 bg-[radial-gradient(circle_at_bottom_right,_rgba(0,212,255,0.14),_transparent_40%)]" />
 
-      <div className="mx-auto flex max-w-7xl flex-col gap-20 px-6 py-12 sm:px-10 lg:px-16">
+      <div className="mx-auto flex max-w-7xl flex-col gap-0 px-6 py-12 sm:px-10 lg:px-16">
         <HeroSection
-          label="access protocol: initialized"
+          label="system_status: online"
           title="MUHAMMAD FACHRIZAL."
           description="Experienced Software Engineer focused on Mobile applications, Android native development, and IoT integrations. Bringing designs to life through clean architecture and optimal performance."
           metrics={[
@@ -190,13 +190,16 @@ export default function Home() {
             { text: "> STATUS / Ping: Ready / 0.01ms", colorClass: "text-[var(--color-muted-foreground)]" },
           ]}
         />
+      </div>
 
-        <section id="stats" className="flex flex-col gap-8 divide-x divide-[var(--color-border)] border-x border-[var(--color-border)] bg-[var(--color-muted)]/30 px-6 py-12 sm:px-10 lg:flex-row lg:px-16">
+      {/* ═══ STATS BAR — full-bleed bg, constrained content ═══ */}
+      <section id="stats" className="border-y border-[var(--color-border)] bg-[var(--color-muted)]/30">
+        <div className="mx-auto max-w-7xl flex flex-col gap-8 divide-[var(--color-border)] px-6 py-12 sm:px-10 lg:flex-row lg:divide-x lg:px-16">
           <div className="flex-1 space-y-2 text-center lg:text-left">
             <div className="text-4xl font-black uppercase tracking-widest text-[var(--color-accent)] lg:text-5xl">
               10+
             </div>
-            <div className="font-ui text-sm uppercase tracking-[0.2em] text-[var(--color-muted-foreground)]">
+            <div className="font-ui text-xs uppercase tracking-[0.2em] text-[var(--color-muted-foreground)]">
               Projects Deployed
             </div>
           </div>
@@ -204,7 +207,7 @@ export default function Home() {
             <div className="text-4xl font-black uppercase tracking-widest text-[var(--color-accent-secondary)] lg:text-5xl">
               5
             </div>
-            <div className="font-ui text-sm uppercase tracking-[0.2em] text-[var(--color-muted-foreground)]">
+            <div className="font-ui text-xs uppercase tracking-[0.2em] text-[var(--color-muted-foreground)]">
               Years Android Exp
             </div>
           </div>
@@ -212,7 +215,7 @@ export default function Home() {
             <div className="text-4xl font-black uppercase tracking-widest text-[var(--color-accent-tertiary)] lg:text-5xl">
               1
             </div>
-            <div className="font-ui text-sm uppercase tracking-[0.2em] text-[var(--color-muted-foreground)]">
+            <div className="font-ui text-xs uppercase tracking-[0.2em] text-[var(--color-muted-foreground)]">
               Year Hardware/IoT Exp
             </div>
           </div>
@@ -220,124 +223,161 @@ export default function Home() {
             <div className="text-4xl font-black uppercase tracking-widest text-[var(--color-accent)] lg:text-5xl">
               3.3
             </div>
-            <div className="font-ui text-sm uppercase tracking-[0.2em] text-[var(--color-muted-foreground)]">
+            <div className="font-ui text-xs uppercase tracking-[0.2em] text-[var(--color-muted-foreground)]">
               Computer Science GPA
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <LayoutSection
-          id="skills"
-          label="competency matrix"
-          title="Core Technologies"
-          description="A complete stack ranging from Mobile Application Development to Hardware/IoT and UI/UX implementation."
-        >
-          <SkillsGrid categories={skillCategories} />
-        </LayoutSection>
-        
-        <LayoutSection
-          id="education"
-          label="academic credentials"
-          title="Education"
-          description="Formal academic foundation leading to the computer science degree."
-        >
-          <div className="w-full">
-            {educationList.map((item) => (
-              <div key={item.id} className="relative flex flex-col md:flex-row gap-8 lg:gap-12 justify-between py-2">
-                
-                {/* Left Column: Institute */}
-                <div className="md:w-1/3 border-l-2 border-[var(--color-accent-tertiary)] pl-6 md:pr-6 shrink-0">
-                  <div className="font-ui text-xs uppercase tracking-[0.3em] text-[var(--color-accent)] mb-3">
-                    sys.institute
-                  </div>
-                  <div className="text-2xl md:text-3xl font-bold uppercase tracking-wider text-foreground">
-                    {item.company}
-                  </div>
-                </div>
-                
-                {/* Right Column: Degree Details */}
-                <div className="md:w-2/3 space-y-6">
-                  {item.roles.map((role, rIdx) => (
-                    <div key={rIdx}>
-                      <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-4 gap-4">
-                        <h3 className="text-xl md:text-2xl font-bold uppercase tracking-wider text-[var(--color-accent-tertiary)]">
-                          {role.role}
-                        </h3>
-                        <span className="font-ui text-xs font-bold uppercase tracking-[0.2em] text-[var(--color-accent)] shrink-0 sm:mt-1">
-                          [ CLASS OF {role.period} ]
-                        </span>
-                      </div>
-                      <p className="text-sm md:text-base text-[var(--color-muted-foreground)] leading-loose whitespace-pre-line">
-                        {role.description}
+      {/* ═══ SKILLS ═══ */}
+      <LayoutSection
+        id="skills"
+        label="competency matrix"
+        title="Core Technologies"
+        description="Precision-mapped capabilities across multiple domains, from mobile interfaces to embedded systems."
+      >
+        <SkillsGrid categories={skillCategories} />
+      </LayoutSection>
+
+      {/* ═══ DIVIDER ═══ */}
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-[var(--color-border)] to-transparent" />
+
+      {/* ═══ EDUCATION — standalone centered ═══ */}
+      <section id="education" className="relative py-20 md:py-28">
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,136,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,136,0.03)_1px,transparent_1px)] bg-[size:50px_50px] pointer-events-none" />
+
+        <div className="relative z-10 mx-auto max-w-3xl px-6 sm:px-10 lg:px-16">
+          {educationList.map((item) => (
+            <div key={item.id} className="relative border border-dashed border-[rgba(0,255,136,0.3)] p-8 md:p-12">
+              <div className="absolute -top-[3px] -left-[3px] w-5 h-5 border-t-2 border-l-2 border-[var(--color-accent)]" />
+              <div className="absolute -top-[3px] -right-[3px] w-5 h-5 border-t-2 border-r-2 border-[var(--color-accent)]" />
+              <div className="absolute -bottom-[3px] -left-[3px] w-5 h-5 border-b-2 border-l-2 border-[var(--color-accent)]" />
+              <div className="absolute -bottom-[3px] -right-[3px] w-5 h-5 border-b-2 border-r-2 border-[var(--color-accent)]" />
+
+              {item.roles.map((role, rIdx) => (
+                <div key={rIdx} className="space-y-6">
+                  <p className="font-ui text-xs uppercase tracking-[0.3em] text-[var(--color-accent)]">
+                    academic_credentials
+                  </p>
+                  <h2 className="text-2xl md:text-4xl font-bold tracking-wider text-foreground leading-tight">
+                    {role.role}, {item.company}.
+                  </h2>
+                  <div className="space-y-5 pt-2">
+                    {role.description.split("\n").filter(Boolean).map((line, i) => (
+                      <p key={i} className="text-sm md:text-base text-[var(--color-muted-foreground)] leading-relaxed">
+                        <span className="text-[var(--color-accent)] mr-2 font-bold">&gt;&gt;</span>
+                        {line}
                       </p>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                  <div className="pt-4 border-t border-[rgba(255,255,255,0.05)]">
+                    <p className="font-ui text-xs uppercase tracking-[0.3em] text-[var(--color-accent)]">
+                      » class_of_{role.period}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </LayoutSection>
-        
-        <LayoutSection
-          id="experience"
-          label="career traces"
-          title="Service Record"
-          description="Historical log of my professional journey acting as a Software Engineer and Hardware Programmer across multiple agencies and corporations."
-        >
-          <ExperienceTimeline experiences={experienceList} />
-        </LayoutSection>
-
-        <LayoutSection
-          id="projects"
-          label="project archive"
-          title="Active deployments"
-          description="From hardware prototypes to immersive mobile apps and educational game learning platforms."
-        >
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {projectList.map((project) => (
-              <ScrollReveal key={project.title}>
-                <ProjectCard
-                  title={project.title}
-                  description={project.description}
-                  tags={project.tags}
-                />
-              </ScrollReveal>
-            ))}
-          </div>
-        </LayoutSection>
-
-        <section id="status" className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <Card className="relative overflow-hidden border-[var(--color-border)] bg-[var(--color-card)] p-8 before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_top_right,_rgba(255,0,255,0.12),_transparent_35%)] before:content-['']">
-            <div className="space-y-5 relative z-10">
-              <p className="font-ui text-sm uppercase tracking-[0.35em] text-[var(--color-accent-tertiary)]">
-                system log
-              </p>
-              <h2 className="text-3xl font-bold uppercase tracking-[0.18em] text-foreground">
-                Live terminal feed
-              </h2>
-              <p className="max-w-2xl text-sm leading-7 text-[var(--color-muted-foreground)]">
-                The cybernetic workflow connects both the low-level hardware constraints and high-end modern mobile UI. Always responsible, always exploring.
-              </p>
+              ))}
             </div>
-            <pre className="terminal-panel mt-8 rounded-none border border-[var(--color-border)] bg-[var(--color-background)] px-5 py-6 text-sm text-[var(--color-foreground)] leading-7">
+          ))}
+        </div>
+      </section>
+
+      {/* ═══ DIVIDER ═══ */}
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-[var(--color-border)] to-transparent" />
+
+      {/* ═══ EXPERIENCE ═══ */}
+      <LayoutSection
+        id="experience"
+        label="career traces"
+        title="Service Record"
+        description="Historical log of my professional journey acting as a Software Engineer and Hardware Programmer across multiple agencies and corporations."
+      >
+        <ExperienceTimeline experiences={experienceList} />
+      </LayoutSection>
+
+      {/* ═══ DIVIDER ═══ */}
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-[var(--color-border)] to-transparent" />
+
+      {/* ═══ PROJECTS ═══ */}
+      <LayoutSection
+        id="projects"
+        label="project archive"
+        title="Active deployments"
+        description="From hardware prototypes to immersive mobile apps and educational game learning platforms."
+      >
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {projectList.map((project) => (
+            <ScrollReveal key={project.title}>
+              <ProjectCard
+                title={project.title}
+                description={project.description}
+                tags={project.tags}
+              />
+            </ScrollReveal>
+          ))}
+        </div>
+      </LayoutSection>
+
+      {/* ═══ DIVIDER ═══ */}
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-[var(--color-border)] to-transparent" />
+
+      {/* ═══ STATUS + CONTACT ═══ */}
+      <section className="relative w-full">
+        <div className="mx-auto max-w-7xl px-6 py-20 sm:px-10 md:py-28 lg:px-16">
+          <div id="status" className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+            {/* Left: Title + Description + Terminal */}
+            <div className="space-y-8">
+              <div className="space-y-5">
+                <p className="font-ui text-sm uppercase tracking-[0.35em] text-[var(--color-accent-tertiary)]">
+                  system log
+                </p>
+                <h2 className="text-3xl font-bold uppercase tracking-[0.18em] text-foreground">
+                  Live terminal feed
+                </h2>
+                <p className="max-w-2xl text-sm leading-7 text-[var(--color-muted-foreground)]">
+                  The cybernetic workflow connects both the low-level hardware constraints and high-end modern mobile UI. Always responsible, always exploring.
+                </p>
+              </div>
+
+              {/* Terminal — styled like reference code window */}
+              <div className="rounded-none border border-[var(--color-border)] bg-[var(--color-card)] overflow-hidden">
+                {/* Traffic light header */}
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-[var(--color-border)] bg-[var(--color-background)]">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
+                  <span className="ml-3 font-ui text-2xs uppercase tracking-[0.2em] text-[var(--color-muted-foreground)]">system.log</span>
+                </div>
+                <pre className="px-5 py-5 text-sm text-[var(--color-foreground)] leading-7 font-mono">
 <span className="text-[var(--color-accent)]">[ 00:00:01 ]</span> root login: muhammad_fachrizal{"\n"}
 <span className="text-[var(--color-accent-secondary)]">[ 00:00:03 ]</span> parsing github: /wldevproject{"\n"}
 <span className="text-[var(--color-accent-tertiary)]">[ 00:00:07 ]</span> linkedin trace: /in/muhammad-fachrizal{"\n"}
 <span className="text-[var(--color-accent)]">[ 00:00:11 ]</span> email routed: joefachrizal@hotmail.com{"\n"}
 <span className="text-[var(--color-muted-foreground)]">[ 00:00:14 ]</span> waiting for user input...
-            </pre>
-          </Card>
+<span className="inline-block w-2 h-4 bg-[var(--color-accent)] animate-[blink_1s_step-end_infinite]" />
+                </pre>
+              </div>
+            </div>
 
-          <CTAPanel
-            id="contact"
-            label="engage"
-            title="Vector contact"
-            description="Need an experienced Mobile Engineer or a prototype builder for your next project? Drop a line and I'll respond securely."
-            primaryText="joefachrizal@hotmail.com"
-            secondaryText="GitHub / LinkedIn"
-          />
-        </section>
-      </div>
+            {/* Right: CTA */}
+            <CTAPanel
+              id="contact"
+              label="engage"
+              title="Vector contact"
+              description="Need an experienced Mobile Engineer or a prototype builder for your next project? Drop a line and I'll respond securely."
+              primaryText="joefachrizal@hotmail.com"
+              primaryHref="joefachrizal@hotmail.com"
+              secondaryText="GitHub / LinkedIn"
+              secondaryLinks={[
+                { label: "GitHub", url: "https://github.com/wldevproject" },
+                { label: "LinkedIn", url: "https://www.linkedin.com/in/muhammad-fachrizal-a32204ba/" },
+              ]}
+            />
+          </div>
+        </div>
+      </section>
+
       <Footer />
     </main>
   );

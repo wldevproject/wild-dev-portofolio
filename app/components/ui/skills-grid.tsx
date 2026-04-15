@@ -22,7 +22,7 @@ export function SkillsGrid({ categories }: SkillsGridProps) {
               {category.skills.map((skill) => (
                 <div
                   key={skill}
-                  className="px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-foreground bg-[var(--color-muted)] border border-[var(--color-border)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] hover:shadow-neon"
+                  className="px-3 py-1.5 font-mono text-xs uppercase tracking-widest text-foreground bg-[var(--color-muted)] border border-[var(--color-border)] transition-colors hover:border-[var(--color-accent)] hover:text-[var(--color-accent)]"
                 >
                   {skill}
                 </div>

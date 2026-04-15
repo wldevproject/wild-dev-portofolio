@@ -39,6 +39,19 @@
   --font-heading: var(--font-orbitron);
   --font-body: var(--font-jetbrains-mono);
   --font-ui: var(--font-share-tech-mono);
+
+  /* Standard font size scale: 9 10 12 13 14 16 18 20 24 28 32 */
+  --text-2xs: 9px;
+  --text-xs: 10px;
+  --text-sm: 12px;
+  --text-base: 13px;
+  --text-md: 14px;
+  --text-lg: 16px;
+  --text-xl: 18px;
+  --text-2xl: 20px;
+  --text-3xl: 24px;
+  --text-4xl: 28px;
+  --text-5xl: 30px;
 }
 
 html {
@@ -279,6 +292,34 @@ select {
   50% {
     transform: translateX(1px);
   }
+}
+
+@keyframes scanMove {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Neon line pulse for hero */
+.hero-glitch-line {
+  position: relative;
+}
+
+.hero-glitch-line::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--accent) 30%, var(--accent) 70%, transparent 100%);
+  opacity: 0.5;
+  animation: scanMove 4s ease-in-out infinite;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

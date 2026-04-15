@@ -6,6 +6,8 @@ interface LayoutSectionProps extends HTMLAttributes<HTMLElement> {
   description?: string;
   actions?: ReactNode;
   children?: ReactNode;
+  /** Extra classes for the full-bleed outer wrapper (backgrounds, borders) */
+  bgClassName?: string;
 }
 
 export function LayoutSection({
@@ -15,12 +17,19 @@ export function LayoutSection({
   actions,
   children,
   className = "",
+  bgClassName = "",
   ...props
 }: LayoutSectionProps) {
   return (
-    <section className={`relative overflow-hidden rounded-none ${className}`} {...props}>
+    <section
+      className={`relative w-full ${bgClassName}`}
+      {...props}
+    >
+      {/* Layer 1: Full-bleed background */}
       <div className="layout-section-bg absolute inset-0 pointer-events-none" />
-      <div className="relative px-0 py-10 sm:px-2 lg:px-0">
+
+      {/* Layer 2: Constrained content */}
+      <div className={`relative mx-auto max-w-7xl px-6 py-20 sm:px-10 md:py-28 lg:px-16 ${className}`}>
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="space-y-4">
             {label ? (

@@ -31,7 +31,7 @@ export function Footer() {
             </Link>
           </div>
         </div>
-        <div className="border-t border-[var(--color-border)] pt-6 text-xs text-[var(--color-muted-foreground)]">
+        <div className="border-t border-[var(--color-border)] pt-6 text-2xs text-[var(--color-muted-foreground)]">
           <p className="font-mono">© 2026 WILD DEV — signal stable, packet loss minimal.</p>
         </div>
       </div>

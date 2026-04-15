@@ -31,8 +31,8 @@ export function ExperienceTimeline({ experiences }: ExperienceTimelineProps) {
             </div>
             
             {/* Content card */}
-            <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 cyber-chamfer border border-[var(--color-border)] bg-[var(--color-card)] transition-all hover:border-[var(--color-accent-secondary)] hover:shadow-[0_0_15px_rgba(255,0,255,0.2)]">
-              <div className="font-ui text-lg uppercase tracking-[0.2em] text-[var(--color-accent-tertiary)] mb-6 pb-4 border-b border-[var(--color-border)]">
+            <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-6 cyber-chamfer border border-[var(--color-border)] bg-[var(--color-card)] transition-colors hover:border-[var(--color-accent-secondary)]">
+              <div className="font-ui text-md uppercase tracking-[0.2em] text-[var(--color-accent-tertiary)] mb-6 pb-4 border-b border-[var(--color-border)]">
                 @ {item.company}
               </div>
               
