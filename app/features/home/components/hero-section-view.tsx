@@ -45,7 +45,7 @@ export function HeroSectionView({
       <div className="pointer-events-none absolute right-0 top-0 h-[600px] w-[600px] bg-[radial-gradient(circle_at_center,rgba(0,255,136,0.08)_0%,transparent_60%)]" />
       <div className="pointer-events-none absolute bottom-0 left-0 h-[400px] w-[400px] bg-[radial-gradient(circle_at_center,rgba(255,0,255,0.05)_0%,transparent_60%)]" />
 
-      <div className="relative z-10 grid w-full gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+      <div className="relative z-10 grid w-full gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-stretch">
         <div className="space-y-10">
           <ScrollReveal>
             <div className="space-y-8">
@@ -113,8 +113,8 @@ export function HeroSectionView({
 
         </div>
 
-        <ScrollReveal>
-          <div className="relative hidden lg:block">
+        <ScrollReveal className="hidden h-full lg:block">
+          <div className="relative flex h-full flex-col">
             <div className="pointer-events-none absolute -inset-4 border border-dashed border-[rgba(0,255,136,0.15)]">
               <div className="absolute -right-1 -top-1 h-3 w-3 border-r-2 border-t-2 border-[var(--color-accent)]" />
               <div className="absolute -bottom-1 -left-1 h-3 w-3 border-b-2 border-l-2 border-[var(--color-accent)]" />
@@ -123,19 +123,19 @@ export function HeroSectionView({
               </div>
             </div>
 
-            <div className="space-y-4">
-              <Card className="relative overflow-hidden before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_top_left,_rgba(0,255,136,0.16),_transparent_40%)] before:content-['']">
+            <div className="flex h-full flex-col gap-4">
+              <Card className="relative flex-1 overflow-hidden before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_top_left,_rgba(0,255,136,0.16),_transparent_40%)] before:content-['']">
                 <div className="terminal-header mb-4 flex items-center gap-2">
                   <span className="h-3 w-3 rounded-full bg-[#ff5f56] shadow-[0_0_10px_rgba(255,95,86,0.35)]" />
                   <span className="h-3 w-3 rounded-full bg-[#ffbd2e] shadow-[0_0_10px_rgba(255,189,46,0.25)]" />
                   <span className="h-3 w-3 rounded-full bg-[#27c93f] shadow-[0_0_10px_rgba(39,201,63,0.25)]" />
                 </div>
-                <div className="space-y-4">
+                <div className="flex flex-1 flex-col gap-4">
                   <div className="rounded-none border border-[var(--color-border)] bg-[var(--color-background)] p-4 text-sm">
                     <p className="font-ui uppercase tracking-[0.35em] text-[var(--color-accent)]">{nodeStatusLabel}</p>
                     <p className="mt-2 font-mono text-md text-foreground">/usr/local/bin/cyberdeck --init</p>
                   </div>
-                  <pre className="terminal-panel rounded-none bg-[var(--color-background)] px-4 py-4 text-sm leading-7 text-[var(--color-foreground)]">
+                  <pre className="terminal-panel min-h-[13rem] flex-1 rounded-none bg-[var(--color-background)] px-4 py-4 text-sm leading-7 text-[var(--color-foreground)]">
                     {terminalLines.map((item) => (
                       <span key={item.text} className={item.colorClass}>
                         {item.text}

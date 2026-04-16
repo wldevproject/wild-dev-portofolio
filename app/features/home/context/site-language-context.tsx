@@ -193,27 +193,27 @@ const siteCopy: Record<SiteLanguage, SiteCopy> = {
     hero: {
       label: "status_sistem: online",
       description:
-        "Software Engineer berpengalaman yang fokus pada aplikasi mobile, Android native, dan integrasi IoT. Mengubah kebutuhan desain menjadi produk yang rapi, efisien, dan siap dipakai.",
+        "Saya bekerja di dua jalur: software development untuk produk digital, dan creative production untuk desain, reels, serta video. Dari sistem yang dibangun sampai visual yang dieksekusi, semuanya saya kerjakan dengan pendekatan yang rapi dan terarah.",
       metrics: [
         {
-          label: "Lokasi",
-          value: "Jawa Barat",
+          label: "Jalur 01",
+          value: "Software Development",
           accentClass: "text-[var(--color-accent)]",
         },
         {
-          label: "Fokus",
-          value: "Software Engineer",
+          label: "Jalur 02",
+          value: "Creative Production",
           accentClass: "text-[var(--color-accent-tertiary)]",
         },
       ],
       ctaPrimary: "Lihat Portfolio",
       ctaSecondary: "Buka Kontak",
-      typewriter: "memuat ringkasan...",
+      typewriter: "membangun produk // memproduksi cerita visual",
       terminalLines: [
         { text: "> SISTEM DIMULAI", colorClass: "text-[var(--color-accent)]" },
         { text: "> IDENTITAS: Muhammad Fachrizal", colorClass: "text-[var(--color-accent-secondary)]" },
-        { text: "> KLASIFIKASI: Software Engineer Android", colorClass: "text-[var(--color-accent-tertiary)]" },
-        { text: "> STATUS / Ping: Siap / 0.01ms", colorClass: "text-[var(--color-muted-foreground)]" },
+        { text: "> JALUR_01: Software Development", colorClass: "text-[var(--color-accent-tertiary)]" },
+        { text: "> JALUR_02: Creative Production", colorClass: "text-[var(--color-muted-foreground)]" },
       ],
       nodeStatus: "status node",
       launchConsole: "Buka console",
@@ -360,27 +360,27 @@ const siteCopy: Record<SiteLanguage, SiteCopy> = {
     hero: {
       label: "system_status: online",
       description:
-        "Experienced Software Engineer focused on mobile applications, Android native development, and IoT integration. Turning design requirements into products that are structured, efficient, and ready to ship.",
+        "I work across two lanes: software development for digital products, and creative production for design, reels, and video. From product systems to visual execution, I build both with a structured and intentional approach.",
       metrics: [
         {
-          label: "Location",
-          value: "West Java",
+          label: "Lane 01",
+          value: "Software Development",
           accentClass: "text-[var(--color-accent)]",
         },
         {
-          label: "Focus",
-          value: "Software Engineer",
+          label: "Lane 02",
+          value: "Creative Production",
           accentClass: "text-[var(--color-accent-tertiary)]",
         },
       ],
       ctaPrimary: "View Portfolio",
       ctaSecondary: "Open Contact",
-      typewriter: "injecting summary...",
+      typewriter: "building products // producing visual stories",
       terminalLines: [
         { text: "> BOOT SEQUENCE INITIATED", colorClass: "text-[var(--color-accent)]" },
         { text: "> IDENTITY: Muhammad Fachrizal", colorClass: "text-[var(--color-accent-secondary)]" },
-        { text: "> CLASSIFICATION: Android Software Engineer", colorClass: "text-[var(--color-accent-tertiary)]" },
-        { text: "> STATUS / Ping: Ready / 0.01ms", colorClass: "text-[var(--color-muted-foreground)]" },
+        { text: "> LANE_01: Software Development", colorClass: "text-[var(--color-accent-tertiary)]" },
+        { text: "> LANE_02: Creative Production", colorClass: "text-[var(--color-muted-foreground)]" },
       ],
       nodeStatus: "node status",
       launchConsole: "Launch console",
