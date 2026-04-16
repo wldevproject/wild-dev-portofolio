@@ -9,11 +9,10 @@ export function Footer() {
             <p className="font-ui text-sm uppercase tracking-[0.35em] text-[var(--color-accent-secondary)]">
               terminal footer
             </p>
-            <h3 className="text-2xl font-semibold uppercase tracking-[0.18em] text-foreground">
-              end of the line
-            </h3>
+            <h3 className="text-2xl font-semibold uppercase tracking-[0.18em] text-foreground">end of the line</h3>
             <p className="max-w-2xl text-sm leading-7 text-[var(--color-muted-foreground)]">
-              This portfolio interface is a cybernetic showcase built on Next.js with a neon, terminal-first presentation that feels raw and alive.
+              This portfolio interface is a cybernetic showcase built on Next.js with a neon, terminal-first
+              presentation that feels raw and alive.
             </p>
           </div>
           <div className="grid gap-3 text-sm uppercase tracking-[0.25em] text-[var(--color-muted-foreground)] sm:grid-cols-2">
@@ -32,7 +31,7 @@ export function Footer() {
           </div>
         </div>
         <div className="border-t border-[var(--color-border)] pt-6 text-2xs text-[var(--color-muted-foreground)]">
-          <p className="font-mono">© 2026 WILD DEV — signal stable, packet loss minimal.</p>
+          <p className="font-mono">© 2026 WILD DEV - signal stable, packet loss minimal.</p>
         </div>
       </div>
     </footer>

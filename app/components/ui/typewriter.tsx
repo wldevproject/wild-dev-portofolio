@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, type HTMLAttributes } from "react";
+import { useEffect, useState, type HTMLAttributes } from "react";
 
 interface TypewriterProps extends HTMLAttributes<HTMLSpanElement> {
   text: string;
