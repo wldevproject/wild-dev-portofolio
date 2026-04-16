@@ -11,15 +11,166 @@ import {
 
 export type SiteLanguage = "id" | "en";
 
+interface LocalizedMetric {
+  accentClass: string;
+  label: string;
+  value: string;
+}
+
+interface LocalizedTerminalLine {
+  colorClass: string;
+  text: string;
+}
+
+interface SiteCopy {
+  nav: {
+    brand: string;
+    sections: {
+      contact: string;
+      education: string;
+      experience: string;
+      home: string;
+      projects: string;
+      skills: string;
+      status: string;
+    };
+    openComms: string;
+    exportCv: string;
+    openMenu: string;
+    closeMenu: string;
+    languageLabel: string;
+  };
+  hero: {
+    label: string;
+    description: string;
+    metrics: LocalizedMetric[];
+    ctaPrimary: string;
+    ctaSecondary: string;
+    typewriter: string;
+    terminalLines: LocalizedTerminalLine[];
+    nodeStatus: string;
+    launchConsole: string;
+    cpuLoad: string;
+  };
+  stats: LocalizedMetric[];
+  skills: {
+    label: string;
+    title: string;
+    description: string;
+  };
+  education: {
+    label: string;
+    classOfPrefix: string;
+  };
+  experience: {
+    label: string;
+    title: string;
+    description: string;
+  };
+  projects: {
+    focusTabs: {
+      development: {
+        label: string;
+        description: string;
+        lane: string;
+      };
+      creative: {
+        label: string;
+        description: string;
+        lane: string;
+      };
+    };
+    categories: {
+      design: {
+        label: string;
+        description: string;
+      };
+      "reel-vertical": {
+        label: string;
+        description: string;
+      };
+      "video-landscape": {
+        label: string;
+        description: string;
+      };
+      youtube: {
+        label: string;
+        description: string;
+      };
+    };
+    sectionLabel: string;
+    title: string;
+    description: string;
+    focusPathSoftware: string;
+    focusPathCreative: string;
+    focusTextSoftware: string;
+    focusTextCreative: string;
+    galleryLabel: string;
+    galleryTitle: string;
+    galleryDescription: string;
+    activeCategory: string;
+    ariaLabel: string;
+    creativeAriaLabel: string;
+    linkHint: string;
+    openLink: string;
+    gear: string;
+    apps: string;
+    platformFallback: string;
+    cardCategoryLabels: {
+      software: string;
+      design: string;
+      "reel-vertical": string;
+      "video-landscape": string;
+      youtube: string;
+    };
+    hash: {
+      development: string;
+      creative: string;
+    };
+  };
+  status: {
+    label: string;
+    title: string;
+    description: string;
+    logFile: string;
+    waiting: string;
+    contactLabel: string;
+    contactTitle: string;
+    contactDescription: string;
+    secondaryText: string;
+    destinationLabel: string;
+  };
+  footer: {
+    label: string;
+    title: string;
+    description: string;
+    copyright: string;
+  };
+  cvModal: {
+    systemOverride: string;
+    title: string;
+    noticeLabel: string;
+    noticeText: string;
+    publicDownload: string;
+    restrictedAccess: string;
+    restrictedHint: string;
+    emailPlaceholder: string;
+    passwordPlaceholder: string;
+    authenticating: string;
+    fullDownload: string;
+    fallbackError: string;
+  };
+}
+
 interface SiteLanguageContextValue {
   language: SiteLanguage;
   setLanguage: (language: SiteLanguage) => void;
-  copy: typeof siteCopy.id;
+  copy: SiteCopy;
 }
 
 const STORAGE_KEY = "wild-dev-portfolio-language";
 
-const siteCopy = {
+const siteCopy: Record<SiteLanguage, SiteCopy> = {
   id: {
     nav: {
       brand: "Wild Dev",
@@ -354,7 +505,7 @@ const siteCopy = {
       fallbackError: "System malfunction. Please try again.",
     },
   },
-} as const;
+};
 
 const SiteLanguageContext = createContext<SiteLanguageContextValue | null>(null);
 

@@ -9,7 +9,9 @@ import { MediaThumbnailCard } from "@/app/features/home/components/media-thumbna
 import { ProjectCard } from "@/app/features/home/components/project-card";
 import { useSiteLanguage } from "@/app/features/home/context/site-language-context";
 
-const creativeCategoryIds: ProjectCategory[] = ["design", "reel-vertical", "video-landscape", "youtube"];
+type CreativeProjectCategory = Exclude<ProjectCategory, "software">;
+
+const creativeCategoryIds: CreativeProjectCategory[] = ["design", "reel-vertical", "video-landscape", "youtube"];
 
 const projectsByFocus = {
   development: projectList.filter((project) => project.focus === "development"),
@@ -40,7 +42,7 @@ export function ProjectsSection() {
     []
   );
 
-  const [activeCreativeCategory, setActiveCreativeCategory] = useState<ProjectCategory>(
+  const [activeCreativeCategory, setActiveCreativeCategory] = useState<CreativeProjectCategory>(
     availableCreativeTabs[0] ?? "reel-vertical"
   );
 
