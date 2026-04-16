@@ -284,6 +284,34 @@ export const projectList: Project[] = [
     includeInResume: false,
   },
   {
+    title: "GDG Bogor Women Techmakers // Short Movie",
+    description:
+      "Short movie untuk acara GDG Bogor Women Techmakers yang menggabungkan footage mobile, drone, dan mirrorless untuk membangun hasil dokumentasi yang lebih sinematik.",
+    tags: ["YouTube", "Short Movie", "Community Event"],
+    focus: "creative",
+    category: "youtube",
+    gear: ["Mobile Phone", "Drone", "Mirrorless"],
+    software: ["Premiere Pro"],
+    platform: "YouTube",
+    status: "published",
+    href: "https://www.youtube.com/watch?v=SJ9pAzI8ObI",
+    includeInResume: false,
+  },
+  {
+    title: "GDG Bogor DevFest // Short Movie",
+    description:
+      "Short movie untuk acara GDG Bogor DevFest dengan kombinasi footage mobile phone dan mirrorless yang diedit untuk menjaga energi acara tetap terasa kuat.",
+    tags: ["YouTube", "Short Movie", "Tech Event"],
+    focus: "creative",
+    category: "youtube",
+    gear: ["Mobile Phone", "Mirrorless"],
+    software: ["Premiere Pro"],
+    platform: "YouTube",
+    status: "published",
+    href: "https://youtu.be/0riQeV7X18U?t=351",
+    includeInResume: false,
+  },
+  {
     title: "HUT RI 80 // Aftermovie 2025",
     description:
       "Aftermovie perayaan HUT RI ke-80 tahun 2025 yang menggabungkan footage mobile phone dan mirrorless untuk menghadirkan recap acara yang lebih lengkap dan emosional.",

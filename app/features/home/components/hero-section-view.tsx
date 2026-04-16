@@ -16,8 +16,6 @@ interface TerminalLine {
 
 interface HeroSectionViewProps {
   cpuLoad: number;
-  ctaPrimary: string;
-  ctaSecondary: string;
   description: string;
   label: string;
   launchConsoleLabel: string;
@@ -31,8 +29,6 @@ interface HeroSectionViewProps {
 
 export function HeroSectionView({
   cpuLoad,
-  ctaPrimary,
-  ctaSecondary,
   description,
   label,
   launchConsoleLabel,
@@ -115,14 +111,6 @@ export function HeroSectionView({
             ))}
           </div>
 
-          <ScrollReveal>
-            <div className="flex flex-col items-start gap-4 sm:flex-row">
-              <Button>
-                {ctaPrimary} <span className="ml-1">→</span>
-              </Button>
-              <Button variant="ghost">{ctaSecondary}</Button>
-            </div>
-          </ScrollReveal>
         </div>
 
         <ScrollReveal>

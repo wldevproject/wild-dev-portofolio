@@ -3,9 +3,7 @@
 import { useEffect, useState } from "react";
 
 export function useScrollThreshold(threshold: number) {
-  const [hasPassedThreshold, setHasPassedThreshold] = useState(() =>
-    typeof window !== "undefined" ? window.scrollY > threshold : false
-  );
+  const [hasPassedThreshold, setHasPassedThreshold] = useState(false);
 
   useEffect(() => {
     let frameId = 0;

@@ -68,6 +68,10 @@ export function ProjectsSection() {
   const creativeProjects = projectsByFocus.creative.filter(
     (project) => project.category === activeCreativeCategory
   );
+  const creativeGridClass =
+    creativeProjects.length <= 4
+      ? "grid gap-6 sm:grid-cols-2 xl:grid-cols-2"
+      : "grid gap-6 sm:grid-cols-2 xl:grid-cols-3";
 
   const handleFocusChange = (focus: PortfolioFocus) => {
     setActiveFocus(focus);
@@ -239,7 +243,7 @@ export function ProjectsSection() {
                 id={`creative-panel-${activeCreativeCategory}`}
                 role="tabpanel"
                 aria-labelledby={`creative-tab-${activeCreativeCategory}`}
-                className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3"
+                className={creativeGridClass}
               >
                 {creativeProjects.map((project) => (
                   <ScrollReveal key={project.title}>

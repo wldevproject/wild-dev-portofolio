@@ -13,8 +13,6 @@ export function HeroHomeSection() {
         title="MUHAMMAD FACHRIZAL."
         description={copy.hero.description}
         metrics={copy.hero.metrics}
-        ctaPrimary={copy.hero.ctaPrimary}
-        ctaSecondary={copy.hero.ctaSecondary}
         terminalLines={copy.hero.terminalLines}
         typewriterText={copy.hero.typewriter}
         nodeStatusLabel={copy.hero.nodeStatus}

@@ -5,7 +5,7 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 
@@ -169,6 +169,7 @@ interface SiteLanguageContextValue {
 }
 
 const STORAGE_KEY = "wild-dev-portfolio-language";
+const LANGUAGE_EVENT = "wild-dev-language-change";
 
 const siteCopy: Record<SiteLanguage, SiteCopy> = {
   id: {
@@ -242,14 +243,14 @@ const siteCopy: Record<SiteLanguage, SiteCopy> = {
     projects: {
       focusTabs: {
         development: {
-          label: "Software",
-          description: "Website, app, dashboard, dan software project yang fokus ke hasil build dan fungsi.",
-          lane: "untuk software",
+          label: "Software Development",
+          description: "Website, aplikasi, dashboard, dan sistem yang berfokus pada build quality dan fungsi produk.",
+          lane: "jalur software",
         },
         creative: {
-          label: "Design & Video",
+          label: "Creative Production",
           description: "Kumpulan karya desain dan video yang bisa langsung dibuka ke hasil aslinya.",
-          lane: "untuk desain & video",
+          lane: "jalur kreatif",
         },
       },
       categories: {
@@ -273,12 +274,12 @@ const siteCopy: Record<SiteLanguage, SiteCopy> = {
       sectionLabel: "fokus portfolio",
       title: "Pilih yang ingin Anda lihat",
       description:
-        "Biar cepat dan tidak bikin bingung, portfolio ini dibagi jadi dua jalur utama. Pilih Software kalau Anda ingin lihat project coding, atau Design & Video kalau Anda ingin lihat karya visual.",
+        "Biar cepat dan tidak bikin bingung, portfolio ini dibagi jadi dua jalur utama. Pilih Software Development untuk project coding, atau Creative Production untuk karya visual.",
       focusPathSoftware: "fokus://software",
       focusPathCreative: "fokus://multimedia",
       focusTextSoftware: "Masuk ke kumpulan project software: website, aplikasi, dashboard, dan sistem.",
-      focusTextCreative: "Masuk ke daftar desain dan video. Setiap item bisa langsung dibuka ke hasil aslinya.",
-      galleryLabel: "galeri design & video",
+      focusTextCreative: "Masuk ke daftar karya desain dan video. Setiap item bisa langsung dibuka ke hasil aslinya.",
+      galleryLabel: "creative production",
       galleryTitle: "Lihat Karya Visual Dengan Ringkas",
       galleryDescription:
         "Formatnya dibuat lebih sederhana supaya cepat dibaca. Klik satu item untuk membuka hasil asli di Instagram atau YouTube.",
@@ -409,14 +410,14 @@ const siteCopy: Record<SiteLanguage, SiteCopy> = {
     projects: {
       focusTabs: {
         development: {
-          label: "Software",
-          description: "Website, app, dashboard, and software projects focused on shipped functionality.",
-          lane: "for software",
+          label: "Software Development",
+          description: "Websites, apps, dashboards, and systems focused on build quality and shipped functionality.",
+          lane: "software lane",
         },
         creative: {
-          label: "Design & Video",
+          label: "Creative Production",
           description: "A collection of design and video work that opens directly to the original result.",
-          lane: "for design & video",
+          lane: "creative lane",
         },
       },
       categories: {
@@ -440,12 +441,12 @@ const siteCopy: Record<SiteLanguage, SiteCopy> = {
       sectionLabel: "portfolio focus",
       title: "Choose what you want to see",
       description:
-        "To keep things clear and fast to scan, this portfolio is split into two main paths. Choose Software if you want to see coding work, or Design & Video if you want to see visual work.",
+        "To keep things clear and fast to scan, this portfolio is split into two main paths. Choose Software Development for coding work, or Creative Production for visual work.",
       focusPathSoftware: "focus://software",
       focusPathCreative: "focus://multimedia",
       focusTextSoftware: "Open the software archive: websites, applications, dashboards, and systems.",
       focusTextCreative: "Open the design and video list. Each item links directly to the original result.",
-      galleryLabel: "design & video gallery",
+      galleryLabel: "creative production",
       galleryTitle: "Scan Visual Work Faster",
       galleryDescription:
         "This layout is intentionally simple so it is easier to read quickly. Click any item to open the original Instagram or YouTube result.",
@@ -509,19 +510,55 @@ const siteCopy: Record<SiteLanguage, SiteCopy> = {
 
 const SiteLanguageContext = createContext<SiteLanguageContextValue | null>(null);
 
+function getStoredLanguage(): SiteLanguage {
+  if (typeof window === "undefined") {
+    return "id";
+  }
+
+  const stored = window.localStorage.getItem(STORAGE_KEY);
+  return stored === "id" || stored === "en" ? stored : "id";
+}
+
+function subscribeLanguageChange(onStoreChange: () => void) {
+  if (typeof window === "undefined") {
+    return () => undefined;
+  }
+
+  const handleStorage = (event: StorageEvent) => {
+    if (event.key === STORAGE_KEY) {
+      onStoreChange();
+    }
+  };
+
+  window.addEventListener("storage", handleStorage);
+  window.addEventListener(LANGUAGE_EVENT, onStoreChange);
+
+  return () => {
+    window.removeEventListener("storage", handleStorage);
+    window.removeEventListener(LANGUAGE_EVENT, onStoreChange);
+  };
+}
+
 export function SiteLanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguage] = useState<SiteLanguage>(() => {
+  const language = useSyncExternalStore<SiteLanguage>(
+    subscribeLanguageChange,
+    getStoredLanguage,
+    () => "id"
+  );
+
+  const setLanguage = (nextLanguage: SiteLanguage) => {
     if (typeof window === "undefined") {
-      return "id";
+      return;
     }
 
-    const stored = window.localStorage.getItem(STORAGE_KEY);
-    return stored === "id" || stored === "en" ? stored : "id";
-  });
+    window.localStorage.setItem(STORAGE_KEY, nextLanguage);
+    window.dispatchEvent(new Event(LANGUAGE_EVENT));
+  };
 
   useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, language);
-    document.documentElement.lang = language;
+    if (typeof document !== "undefined") {
+      document.documentElement.lang = language;
+    }
   }, [language]);
 
   const value = useMemo(

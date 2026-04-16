@@ -15,8 +15,6 @@ interface TerminalLine {
 }
 
 interface HeroSectionProps {
-  ctaPrimary: string;
-  ctaSecondary: string;
   description: string;
   label: string;
   launchConsoleLabel: string;
@@ -29,8 +27,6 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({
-  ctaPrimary,
-  ctaSecondary,
   description,
   label,
   launchConsoleLabel,
@@ -46,8 +42,6 @@ export function HeroSection({
   return (
     <HeroSectionView
       cpuLoad={cpuLoad}
-      ctaPrimary={ctaPrimary}
-      ctaSecondary={ctaSecondary}
       description={description}
       label={label}
       launchConsoleLabel={launchConsoleLabel}
