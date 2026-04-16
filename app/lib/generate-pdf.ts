@@ -240,7 +240,7 @@ class PdfBuilder {
   drawProjects() {
     this.drawSectionTitle("Key Projects");
 
-    for (const project of projectList) {
+    for (const project of projectList.filter((entry) => entry.includeInResume !== false)) {
       this.checkPageBreak(14);
 
       this.setFont("bold", 9, COLOR_BLACK);
