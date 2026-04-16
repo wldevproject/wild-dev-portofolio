@@ -39,6 +39,7 @@
   --font-heading: var(--font-orbitron);
   --font-body: var(--font-jetbrains-mono);
   --font-ui: var(--font-share-tech-mono);
+  --breakpoint-nav: 70rem;
 
   /* Compact font size scale: 9 10 11 12 13 14 16 18 20 24 28 30 */
   --text-3xs: 9px;
@@ -248,6 +249,59 @@ select {
 
 .button-ghost {
   background: rgba(255, 255, 255, 0.04);
+}
+
+.nav-hud-item {
+  --nav-hud-rgb: 0 255 136;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition:
+    transform 120ms steps(4, end),
+    border-color 120ms steps(4, end),
+    background-color 120ms steps(4, end),
+    box-shadow 120ms steps(4, end),
+    color 120ms steps(4, end),
+    filter 120ms steps(4, end);
+}
+
+.nav-hud-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    linear-gradient(90deg, transparent, rgb(var(--nav-hud-rgb) / 0.2), transparent),
+    linear-gradient(180deg, rgb(var(--nav-hud-rgb) / 0.1), transparent 55%);
+  transform: translateX(-110%);
+  transition: opacity 120ms steps(4, end);
+}
+
+.nav-hud-item:hover,
+.nav-hud-item:focus-visible {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px rgb(var(--nav-hud-rgb) / 0.18),
+    0 0 14px rgb(var(--nav-hud-rgb) / 0.12);
+  filter: drop-shadow(0 0 6px rgb(var(--nav-hud-rgb) / 0.16));
+}
+
+.nav-hud-item:hover::before,
+.nav-hud-item:focus-visible::before,
+.nav-hud-item[data-active="true"]::before {
+  opacity: 1;
+  animation: scanMove 1.8s linear infinite;
+}
+
+.nav-hud-item[data-active="true"] {
+  box-shadow:
+    0 0 0 1px rgb(var(--nav-hud-rgb) / 0.2),
+    0 0 16px rgb(var(--nav-hud-rgb) / 0.14);
+}
+
+.nav-hud-item-secondary {
+  --nav-hud-rgb: 0 212 255;
 }
 
 .terminal-panel {
