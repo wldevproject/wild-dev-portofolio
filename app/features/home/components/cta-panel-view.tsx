@@ -9,6 +9,7 @@ export interface LinkOption {
 
 interface CTAPanelViewProps extends HTMLAttributes<HTMLDivElement> {
   description: string;
+  dialogLabel?: string;
   dialogOpen: boolean;
   label: string;
   primaryHref?: string;
@@ -22,6 +23,7 @@ interface CTAPanelViewProps extends HTMLAttributes<HTMLDivElement> {
 
 export function CTAPanelView({
   description,
+  dialogLabel = "select_destination",
   dialogOpen,
   label,
   primaryHref,
@@ -78,7 +80,7 @@ export function CTAPanelView({
           >
             <div className="flex items-center justify-between border-b border-[var(--color-border)] bg-[var(--color-background)] px-6 py-4">
               <span className="font-ui text-xs uppercase tracking-[0.3em] text-[var(--color-accent)]">
-                select_destination
+                {dialogLabel}
               </span>
               <button
                 onClick={onCloseDialog}

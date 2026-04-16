@@ -6,6 +6,7 @@ import { useCtaDialog } from "@/app/features/home/hooks/use-cta-dialog";
 
 export interface CTAPanelProps extends HTMLAttributes<HTMLDivElement> {
   description: string;
+  dialogLabel?: string;
   label: string;
   primaryHref?: string;
   primaryText: string;
@@ -16,6 +17,7 @@ export interface CTAPanelProps extends HTMLAttributes<HTMLDivElement> {
 
 export function CTAPanel({
   description,
+  dialogLabel,
   label,
   primaryHref,
   primaryText,
@@ -29,6 +31,7 @@ export function CTAPanel({
   return (
     <CTAPanelView
       description={description}
+      dialogLabel={dialogLabel}
       dialogOpen={dialogOpen}
       label={label}
       primaryHref={primaryHref}

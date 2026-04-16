@@ -1,6 +1,7 @@
 "use client";
 
 import { CvModalView } from "@/app/features/home/components/cv-modal-view";
+import { useSiteLanguage } from "@/app/features/home/context/site-language-context";
 import { useCvModalForm } from "@/app/features/home/hooks/use-cv-modal-form";
 
 interface CvModalProps {
@@ -9,6 +10,7 @@ interface CvModalProps {
 }
 
 export function CvModal({ isOpen, onClose }: CvModalProps) {
+  const { copy } = useSiteLanguage();
   const {
     email,
     error,
@@ -18,10 +20,11 @@ export function CvModal({ isOpen, onClose }: CvModalProps) {
     handleEmailChange,
     handlePasswordChange,
     handlePublicDownload,
-  } = useCvModalForm({ onClose });
+  } = useCvModalForm({ onClose, fallbackError: copy.cvModal.fallbackError });
 
   return (
     <CvModalView
+      copy={copy.cvModal}
       email={email}
       error={error}
       isOpen={isOpen}

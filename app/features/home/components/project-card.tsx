@@ -1,19 +1,15 @@
+"use client";
+
 import type { Project } from "@/app/data/resume-data";
 import { Card } from "@/app/components/ui/card";
+import { useSiteLanguage } from "@/app/features/home/context/site-language-context";
 
 interface ProjectCardProps {
   project: Project;
 }
 
-const categoryLabels: Record<Project["category"], string> = {
-  software: "software build",
-  design: "design asset",
-  "reel-vertical": "short-form vertical",
-  "video-landscape": "landscape video",
-  youtube: "youtube edit",
-};
-
 export function ProjectCard({ project }: ProjectCardProps) {
+  const { copy } = useSiteLanguage();
   const isDevelopment = project.focus === "development";
   const status = (project.status ?? (isDevelopment ? "live" : "published")).toLowerCase();
   const isActive = status === "live" || status === "published";
@@ -31,7 +27,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const footerBorderClass = isDevelopment
     ? "group-hover:border-[rgba(0,255,136,0.1)]"
     : "group-hover:border-[rgba(0,212,255,0.12)]";
-  const badgeLabel = project.platform ?? (isDevelopment ? "Deployment" : "Media");
+  const badgeLabel = project.platform ?? (isDevelopment ? copy.projects.cardCategoryLabels.software : copy.projects.platformFallback);
 
   return (
     <Card
@@ -101,7 +97,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
         <div className="mt-5 flex items-center justify-between gap-4">
           <p className="font-ui text-[0.65rem] uppercase tracking-[0.32em] text-[var(--color-muted-foreground)]">
-            {categoryLabels[project.category]}
+            {copy.projects.cardCategoryLabels[project.category]}
           </p>
           {project.href ? (
             <a
@@ -110,11 +106,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
               rel="noreferrer"
               className={`font-ui text-[0.68rem] uppercase tracking-[0.28em] transition-colors ${accentTextClass}`}
             >
-              open casefile
+              {copy.projects.openLink}
             </a>
           ) : (
             <span className="font-ui text-[0.68rem] uppercase tracking-[0.28em] text-[var(--color-muted-foreground)]">
-              internal archive
+              -
             </span>
           )}
         </div>

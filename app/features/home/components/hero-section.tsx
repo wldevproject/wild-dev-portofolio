@@ -19,9 +19,13 @@ interface HeroSectionProps {
   ctaSecondary: string;
   description: string;
   label: string;
+  launchConsoleLabel: string;
   metrics: readonly HeroMetric[];
+  nodeStatusLabel: string;
+  cpuLoadLabel: string;
   terminalLines: readonly TerminalLine[];
   title: string;
+  typewriterText: string;
 }
 
 export function HeroSection({
@@ -29,9 +33,13 @@ export function HeroSection({
   ctaSecondary,
   description,
   label,
+  launchConsoleLabel,
   metrics,
+  nodeStatusLabel,
+  cpuLoadLabel,
   terminalLines,
   title,
+  typewriterText,
 }: HeroSectionProps) {
   const cpuLoad = useCpuLoad();
 
@@ -42,9 +50,13 @@ export function HeroSection({
       ctaSecondary={ctaSecondary}
       description={description}
       label={label}
+      launchConsoleLabel={launchConsoleLabel}
       metrics={metrics}
+      nodeStatusLabel={nodeStatusLabel}
+      cpuLoadLabel={cpuLoadLabel}
       terminalLines={terminalLines}
       titleWords={title.split(" ")}
+      typewriterText={typewriterText}
     />
   );
 }

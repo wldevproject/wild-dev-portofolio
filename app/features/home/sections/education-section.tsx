@@ -1,6 +1,11 @@
+"use client";
+
 import { educationList } from "@/app/data/resume-data";
+import { useSiteLanguage } from "@/app/features/home/context/site-language-context";
 
 export function EducationSection() {
+  const { copy } = useSiteLanguage();
+
   return (
     <section id="education" className="relative py-20 md:py-28">
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(rgba(0,255,136,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,136,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
@@ -16,7 +21,7 @@ export function EducationSection() {
             {item.roles.map((role, index) => (
               <div key={`${item.id}-${role.period}-${index}`} className="space-y-6">
                 <p className="font-ui text-xs uppercase tracking-[0.3em] text-[var(--color-accent)]">
-                  academic_credentials
+                  {copy.education.label}
                 </p>
                 <h2 className="text-2xl font-bold leading-tight tracking-wider text-foreground md:text-4xl">
                   {role.role}, {item.company}.
@@ -37,7 +42,7 @@ export function EducationSection() {
                 </div>
                 <div className="border-t border-[rgba(255,255,255,0.05)] pt-4">
                   <p className="font-ui text-xs uppercase tracking-[0.3em] text-[var(--color-accent)]">
-                    {`» class_of_${role.period}`}
+                    {`» ${copy.education.classOfPrefix}_${role.period}`}
                   </p>
                 </div>
               </div>

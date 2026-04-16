@@ -1,101 +1,107 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { LayoutSection } from "@/app/components/ui/layout-section";
 import { ScrollReveal } from "@/app/components/ui/scroll-reveal";
 import type { PortfolioFocus, Project, ProjectCategory } from "@/app/data/resume-data";
 import { projectList } from "@/app/data/resume-data";
 import { MediaThumbnailCard } from "@/app/features/home/components/media-thumbnail-card";
 import { ProjectCard } from "@/app/features/home/components/project-card";
+import { useSiteLanguage } from "@/app/features/home/context/site-language-context";
 
-const focusTabs: Array<{
-  id: PortfolioFocus;
-  label: string;
-  description: string;
-}> = [
-  {
-    id: "development",
-    label: "Software",
-    description: "Website, app, dashboard, and software project yang fokus ke hasil build dan fungsi.",
-  },
-  {
-    id: "creative",
-    label: "Design & Video",
-    description: "Kumpulan karya desain dan video yang bisa langsung dibuka ke hasil aslinya.",
-  },
-];
-
-const creativeCategoryMeta: Array<{
-  id: ProjectCategory;
-  label: string;
-  description: string;
-}> = [
-  {
-    id: "design",
-    label: "Design",
-    description: "Static visuals, UI explorations, and brand-ready compositions.",
-  },
-  {
-    id: "reel-vertical",
-    label: "Reels Vertical",
-    description: "Vertical-first social edits tuned for mobile viewing.",
-  },
-  {
-    id: "video-landscape",
-    label: "Video Landscape",
-    description: "Widescreen content with broader framing and steadier pacing.",
-  },
-  {
-    id: "youtube",
-    label: "YouTube",
-    description: "Longer-form edits intended for deeper viewing sessions.",
-  },
-];
+const creativeCategoryIds: ProjectCategory[] = ["design", "reel-vertical", "video-landscape", "youtube"];
 
 const projectsByFocus = {
   development: projectList.filter((project) => project.focus === "development"),
   creative: projectList.filter((project) => project.focus === "creative"),
 } satisfies Record<PortfolioFocus, Project[]>;
 
+function getFocusFromHash(hash: string): PortfolioFocus | null {
+  if (hash === "#projects/developper") {
+    return "development";
+  }
+
+  if (hash === "#projects/multimedia") {
+    return "creative";
+  }
+
+  return null;
+}
+
 export function ProjectsSection() {
+  const { copy } = useSiteLanguage();
   const [activeFocus, setActiveFocus] = useState<PortfolioFocus>("development");
 
   const availableCreativeTabs = useMemo(
     () =>
-      creativeCategoryMeta.filter((category) =>
-        projectsByFocus.creative.some((project) => project.category === category.id)
+      creativeCategoryIds.filter((category) =>
+        projectsByFocus.creative.some((project) => project.category === category)
       ),
     []
   );
 
   const [activeCreativeCategory, setActiveCreativeCategory] = useState<ProjectCategory>(
-    availableCreativeTabs[0]?.id ?? "reel-vertical"
+    availableCreativeTabs[0] ?? "reel-vertical"
   );
 
+  useEffect(() => {
+    const syncFromHash = () => {
+      const nextFocus = getFocusFromHash(window.location.hash.toLowerCase());
+
+      if (nextFocus) {
+        setActiveFocus(nextFocus);
+        document.getElementById("projects")?.scrollIntoView({ block: "start" });
+      }
+    };
+
+    syncFromHash();
+    window.addEventListener("hashchange", syncFromHash);
+
+    return () => window.removeEventListener("hashchange", syncFromHash);
+  }, []);
+
   const activeCreativeMeta =
-    availableCreativeTabs.find((category) => category.id === activeCreativeCategory) ?? availableCreativeTabs[0];
+    availableCreativeTabs.find((category) => category === activeCreativeCategory) ?? availableCreativeTabs[0];
 
   const creativeProjects = projectsByFocus.creative.filter(
     (project) => project.category === activeCreativeCategory
   );
 
+  const handleFocusChange = (focus: PortfolioFocus) => {
+    setActiveFocus(focus);
+    window.history.replaceState(null, "", copy.projects.hash[focus]);
+    document.getElementById("projects")?.scrollIntoView({ block: "start" });
+  };
+
+  const focusTabs = [
+    {
+      id: "development" as const,
+      label: copy.projects.focusTabs.development.label,
+      description: copy.projects.focusTabs.development.description,
+      lane: copy.projects.focusTabs.development.lane,
+    },
+    {
+      id: "creative" as const,
+      label: copy.projects.focusTabs.creative.label,
+      description: copy.projects.focusTabs.creative.description,
+      lane: copy.projects.focusTabs.creative.lane,
+    },
+  ];
+
   return (
     <LayoutSection
       id="projects"
-      label="portfolio focus"
-      title="Pilih yang ingin Anda lihat"
-      description="Biar cepat dan tidak bikin bingung, portfolio ini dibagi jadi dua jalur utama. Pilih Software kalau Anda ingin lihat project coding, atau Design & Video kalau Anda ingin lihat karya visual."
+      label={copy.projects.sectionLabel}
+      title={copy.projects.title}
+      description={copy.projects.description}
       actions={
         <div className="terminal-panel cyber-chamfer-sm relative overflow-hidden border border-[rgba(0,255,136,0.18)] bg-[rgba(10,10,15,0.75)] px-5 py-4 text-left">
           <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,transparent,rgba(0,255,136,0.06),transparent)] opacity-60" />
           <p className="font-ui text-[0.62rem] uppercase tracking-[0.32em] text-[var(--color-accent)]">
-            {activeFocus === "development" ? "focus://software" : "focus://design-video"}
+            {activeFocus === "development" ? copy.projects.focusPathSoftware : copy.projects.focusPathCreative}
           </p>
           <p className="mt-2 text-sm leading-6 text-[var(--color-muted-foreground)]">
-            &gt;{" "}
-            {activeFocus === "development"
-              ? "Masuk ke kumpulan project software: website, aplikasi, dashboard, dan sistem."
-              : "Masuk ke daftar desain dan video. Setiap item bisa langsung dibuka ke hasil aslinya."}
+            &gt; {activeFocus === "development" ? copy.projects.focusTextSoftware : copy.projects.focusTextCreative}
           </p>
         </div>
       }
@@ -103,11 +109,7 @@ export function ProjectsSection() {
       <div className="space-y-8">
         <div className="cyber-chamfer relative overflow-hidden border border-[rgba(255,0,255,0.16)] bg-[rgba(18,18,26,0.78)] p-3">
           <div className="pointer-events-none absolute inset-0 circuit-grid opacity-45" />
-          <div
-            role="tablist"
-            aria-label="Portfolio focus"
-            className="relative grid gap-3 sm:grid-cols-2"
-          >
+          <div role="tablist" aria-label={copy.projects.ariaLabel} className="relative grid gap-3 sm:grid-cols-2">
             {focusTabs.map((tab) => {
               const isActive = tab.id === activeFocus;
               const projectCount = projectsByFocus[tab.id].length;
@@ -120,7 +122,7 @@ export function ProjectsSection() {
                   type="button"
                   aria-selected={isActive}
                   aria-controls={`portfolio-panel-${tab.id}`}
-                  onClick={() => setActiveFocus(tab.id)}
+                  onClick={() => handleFocusChange(tab.id)}
                   className={`cyber-chamfer-sm relative min-h-[124px] overflow-hidden border px-5 py-4 text-left transition-all duration-150 ${
                     isActive
                       ? "border-[rgba(0,255,136,0.45)] bg-[rgba(0,255,136,0.08)] shadow-[0_0_18px_rgba(0,255,136,0.14)]"
@@ -136,7 +138,7 @@ export function ProjectsSection() {
                             isActive ? "text-[var(--color-accent)]" : "text-[var(--color-accent-tertiary)]"
                           }`}
                         >
-                          {tab.id === "development" ? "for software" : "for design & video"}
+                          {tab.lane}
                         </p>
                         <h3 className="mt-2 text-xl font-black uppercase tracking-[0.14em] text-foreground">
                           {tab.label}
@@ -175,24 +177,23 @@ export function ProjectsSection() {
               <div className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
                 <div className="max-w-2xl space-y-3">
                   <p className="font-ui text-[0.62rem] uppercase tracking-[0.32em] text-[var(--color-accent-tertiary)]">
-                    design & video gallery
+                    {copy.projects.galleryLabel}
                   </p>
                   <h3 className="text-2xl font-black uppercase tracking-[0.16em] text-foreground">
-                    Lihat Karya Visual Dengan Ringkas
+                    {copy.projects.galleryTitle}
                   </h3>
                   <p className="text-sm leading-7 text-[var(--color-muted-foreground)]">
-                    Formatnya dibuat lebih sederhana supaya cepat dibaca. Klik satu item untuk membuka hasil asli di
-                    Instagram atau YouTube.
+                    {copy.projects.galleryDescription}
                   </p>
                 </div>
 
                 {activeCreativeMeta ? (
                   <div className="cyber-chamfer-sm border border-[rgba(0,212,255,0.22)] bg-[rgba(0,212,255,0.05)] px-4 py-3">
                     <p className="font-ui text-[0.58rem] uppercase tracking-[0.3em] text-[var(--color-accent-tertiary)]">
-                      active category
+                      {copy.projects.activeCategory}
                     </p>
                     <p className="mt-2 text-sm leading-6 text-[var(--color-muted-foreground)]">
-                      {activeCreativeMeta.description}
+                      {copy.projects.categories[activeCreativeMeta].description}
                     </p>
                   </div>
                 ) : null}
@@ -201,31 +202,31 @@ export function ProjectsSection() {
               {availableCreativeTabs.length > 0 ? (
                 <div
                   role="tablist"
-                  aria-label="Creative categories"
+                  aria-label={copy.projects.creativeAriaLabel}
                   className="flex flex-wrap gap-3 border-b border-[rgba(255,255,255,0.08)] pb-4"
                 >
                   {availableCreativeTabs.map((category) => {
-                    const isActive = category.id === activeCreativeCategory;
+                    const isActive = category === activeCreativeCategory;
                     const projectCount = projectsByFocus.creative.filter(
-                      (project) => project.category === category.id
+                      (project) => project.category === category
                     ).length;
 
                     return (
                       <button
-                        key={category.id}
-                        id={`creative-tab-${category.id}`}
+                        key={category}
+                        id={`creative-tab-${category}`}
                         role="tab"
                         type="button"
                         aria-selected={isActive}
-                        aria-controls={`creative-panel-${category.id}`}
-                        onClick={() => setActiveCreativeCategory(category.id)}
+                        aria-controls={`creative-panel-${category}`}
+                        onClick={() => setActiveCreativeCategory(category)}
                         className={`cyber-chamfer-sm min-h-[44px] border px-4 py-3 font-ui text-[0.62rem] uppercase tracking-[0.28em] transition-all duration-150 ${
                           isActive
                             ? "border-[rgba(0,212,255,0.42)] bg-[rgba(0,212,255,0.09)] text-[var(--color-accent-tertiary)] shadow-[0_0_16px_rgba(0,212,255,0.12)]"
                             : "border-[var(--color-border)] bg-[rgba(10,10,15,0.76)] text-[var(--color-muted-foreground)] hover:border-[rgba(255,0,255,0.26)] hover:text-foreground"
                         }`}
                       >
-                        {category.label} [{String(projectCount).padStart(2, "0")}]
+                        {copy.projects.categories[category].label} [{String(projectCount).padStart(2, "0")}]
                       </button>
                     );
                   })}

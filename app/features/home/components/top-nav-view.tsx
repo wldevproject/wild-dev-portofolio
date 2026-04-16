@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ScrollProgress } from "@/app/features/home/components/scroll-progress";
+import type { SiteLanguage } from "@/app/features/home/context/site-language-context";
 
 interface NavSection {
   id: string;
@@ -10,11 +11,21 @@ interface TopNavViewProps {
   activeSection: string;
   floatingHover: boolean;
   isScrolled: boolean;
+  language: SiteLanguage;
   menuOpen: boolean;
+  navText: {
+    brand: string;
+    closeMenu: string;
+    exportCv: string;
+    languageLabel: string;
+    openComms: string;
+    openMenu: string;
+  };
   navSections: readonly NavSection[];
   onCloseMenu: () => void;
   onFloatingMouseEnter: () => void;
   onFloatingMouseLeave: () => void;
+  onLanguageChange: (language: SiteLanguage) => void;
   onMenuToggle: () => void;
   onOpenCvModal: () => void;
 }
@@ -53,11 +64,14 @@ export function TopNavView({
   activeSection,
   floatingHover,
   isScrolled,
+  language,
   menuOpen,
+  navText,
   navSections,
   onCloseMenu,
   onFloatingMouseEnter,
   onFloatingMouseLeave,
+  onLanguageChange,
   onMenuToggle,
   onOpenCvModal,
 }: TopNavViewProps) {
@@ -74,7 +88,7 @@ export function TopNavView({
             href="#home"
             className="shrink-0 whitespace-nowrap font-ui text-[10px] uppercase leading-none tracking-[0.42em] text-[var(--color-accent)] sm:text-sm sm:tracking-[0.35em]"
           >
-            WILD DEV
+            {navText.brand}
           </Link>
 
           <nav className="hidden min-w-0 flex-1 items-center justify-center gap-2 text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted-foreground)] md:flex lg:gap-3 lg:text-xs lg:tracking-[0.2em] nav:gap-5 nav:text-sm nav:tracking-[0.25em] xl:gap-6">
@@ -102,37 +116,61 @@ export function TopNavView({
           </nav>
 
           <div className="ml-auto flex shrink-0 items-center gap-2 md:gap-2.5 lg:gap-3 nav:gap-3.5 xl:gap-4">
+            <div
+              className="inline-flex shrink-0 items-center gap-1 border border-[var(--color-border)] bg-[rgba(10,10,15,0.78)] p-1"
+              aria-label={navText.languageLabel}
+            >
+              {(["id", "en"] as const).map((code) => {
+                const isActive = language === code;
+
+                return (
+                  <button
+                    key={code}
+                    type="button"
+                    aria-pressed={isActive}
+                    onClick={() => onLanguageChange(code)}
+                    className={`h-8 w-8 border text-[10px] font-ui uppercase tracking-[0.2em] transition ${
+                      isActive
+                        ? "border-[var(--color-accent)] bg-[rgba(0,255,136,0.12)] text-[var(--color-accent)]"
+                        : "border-transparent text-[var(--color-muted-foreground)] hover:border-[rgba(0,255,136,0.18)] hover:text-[var(--color-accent)]"
+                    }`}
+                  >
+                    {code}
+                  </button>
+                );
+              })}
+            </div>
             <button
               onClick={onOpenCvModal}
               className={`${tabletSecondaryActionButtonClass} border-[var(--color-accent-tertiary)] text-[var(--color-accent-tertiary)] hover:bg-[rgba(0,212,255,0.08)] hover:shadow-[0_0_16px_rgba(0,212,255,0.14)]`}
             >
-              CV
+              {navText.exportCv}
             </button>
             <Link
               href="#contact"
               className={`${tabletPrimaryActionButtonClass} border-[var(--color-accent)] text-[var(--color-accent)] hover:bg-[rgba(0,255,136,0.08)] hover:shadow-[0_0_16px_rgba(0,255,136,0.16)]`}
             >
-              <span className="lg:hidden">Open Comms</span>
-              <span className="hidden lg:inline">Comms</span>
+              <span className="lg:hidden">{navText.openComms}</span>
+              <span className="hidden lg:inline">{navText.openComms}</span>
             </Link>
             <button
               onClick={onOpenCvModal}
               className={`${desktopActionButtonClass} nav-hud-item-secondary focus-visible:ring-[var(--color-accent-tertiary)] border-[var(--color-accent-tertiary)] text-[var(--color-accent-tertiary)] hover:bg-[rgba(0,212,255,0.08)] hover:shadow-[0_0_16px_rgba(0,212,255,0.16)]`}
             >
-              <span className="nav:hidden xl:inline">Export CV</span>
-              <span className="hidden nav:inline xl:hidden">CV</span>
+              <span className="nav:hidden xl:inline">{navText.exportCv}</span>
+              <span className="hidden nav:inline xl:hidden">{navText.exportCv}</span>
             </button>
             <Link
               href="#contact"
               className={`${desktopActionButtonClass} border-[var(--color-accent)] text-[var(--color-accent)] hover:bg-[rgba(0,255,136,0.08)] hover:shadow-[0_0_16px_rgba(0,255,136,0.16)]`}
             >
-              <span className="nav:hidden xl:inline">Open Comms</span>
-              <span className="hidden nav:inline xl:hidden">Comms</span>
+              <span className="nav:hidden xl:inline">{navText.openComms}</span>
+              <span className="hidden nav:inline xl:hidden">{navText.openComms}</span>
             </Link>
             <button
               type="button"
               aria-expanded={menuOpen}
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-label={menuOpen ? navText.closeMenu : navText.openMenu}
               className={`${navHudInteractiveClass} inline-flex h-11 w-11 items-center justify-center rounded-none border border-[var(--color-border)] text-[var(--color-accent)] transition hover:bg-[rgba(0,255,136,0.08)] md:hidden`}
               onClick={onMenuToggle}
             >
@@ -144,6 +182,31 @@ export function TopNavView({
         {menuOpen ? (
           <div className="absolute inset-x-0 top-full z-50 border-t border-[var(--color-border)] bg-[rgba(10,10,15,0.98)] px-4 py-4 backdrop-blur-xl md:hidden">
             <div className="flex flex-col gap-3 text-xs uppercase tracking-[0.22em] text-[var(--color-muted-foreground)] sm:text-sm sm:tracking-[0.25em]">
+              <div className="mb-1 flex items-center gap-2 border border-[var(--color-border)] bg-[rgba(255,255,255,0.02)] p-2">
+                <span className="font-ui text-2xs uppercase tracking-[0.24em] text-[var(--color-muted-foreground)]">
+                  {navText.languageLabel}
+                </span>
+                <div className="ml-auto inline-flex gap-1">
+                  {(["id", "en"] as const).map((code) => {
+                    const isActive = language === code;
+
+                    return (
+                      <button
+                        key={code}
+                        type="button"
+                        onClick={() => onLanguageChange(code)}
+                        className={`h-8 w-8 border text-[10px] font-ui uppercase tracking-[0.2em] transition ${
+                          isActive
+                            ? "border-[var(--color-accent)] bg-[rgba(0,255,136,0.12)] text-[var(--color-accent)]"
+                            : "border-transparent text-[var(--color-muted-foreground)] hover:border-[rgba(0,255,136,0.18)] hover:text-[var(--color-accent)]"
+                        }`}
+                      >
+                        {code}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
               {navSections.map((section) => (
                 <Link
                   key={section.id}
@@ -167,14 +230,14 @@ export function TopNavView({
                   }}
                   className={`${mobileActionButtonClass} nav-hud-item-secondary focus-visible:ring-[var(--color-accent-tertiary)] border-[var(--color-accent-tertiary)] text-[var(--color-accent-tertiary)] hover:bg-[rgba(0,212,255,0.08)]`}
                 >
-                  Export CV
+                  {navText.exportCv}
                 </button>
                 <Link
                   href="#contact"
                   onClick={onCloseMenu}
                   className={`${mobileActionButtonClass} border-[var(--color-accent)] text-[var(--color-accent)] hover:bg-[rgba(0,255,136,0.08)]`}
                 >
-                  Open Comms
+                  {navText.openComms}
                 </Link>
               </div>
             </div>

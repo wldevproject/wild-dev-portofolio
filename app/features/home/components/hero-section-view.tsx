@@ -20,9 +20,13 @@ interface HeroSectionViewProps {
   ctaSecondary: string;
   description: string;
   label: string;
+  launchConsoleLabel: string;
   metrics: readonly HeroMetric[];
+  nodeStatusLabel: string;
+  cpuLoadLabel: string;
   terminalLines: readonly TerminalLine[];
   titleWords: string[];
+  typewriterText: string;
 }
 
 export function HeroSectionView({
@@ -31,9 +35,13 @@ export function HeroSectionView({
   ctaSecondary,
   description,
   label,
+  launchConsoleLabel,
   metrics,
+  nodeStatusLabel,
+  cpuLoadLabel,
   terminalLines,
   titleWords,
+  typewriterText,
 }: HeroSectionViewProps) {
   return (
     <section className="relative flex min-h-[85vh] items-center">
@@ -89,7 +97,7 @@ export function HeroSectionView({
               </div>
 
               <div className="text-sm uppercase tracking-[0.35em] text-[var(--color-accent)]">
-                <Typewriter text="injecting payload..." speed={50} delay={800} />
+                <Typewriter text={typewriterText} speed={50} delay={800} />
               </div>
             </div>
           </ScrollReveal>
@@ -136,7 +144,7 @@ export function HeroSectionView({
                 </div>
                 <div className="space-y-4">
                   <div className="rounded-none border border-[var(--color-border)] bg-[var(--color-background)] p-4 text-sm">
-                    <p className="font-ui uppercase tracking-[0.35em] text-[var(--color-accent)]">node status</p>
+                    <p className="font-ui uppercase tracking-[0.35em] text-[var(--color-accent)]">{nodeStatusLabel}</p>
                     <p className="mt-2 font-mono text-md text-foreground">/usr/local/bin/cyberdeck --init</p>
                   </div>
                   <pre className="terminal-panel rounded-none bg-[var(--color-background)] px-4 py-4 text-sm leading-7 text-[var(--color-foreground)]">
@@ -148,7 +156,7 @@ export function HeroSectionView({
                     ))}
                   </pre>
                   <Button variant="ghost" className="w-full justify-center text-[var(--color-accent)]">
-                    Launch console
+                    {launchConsoleLabel}
                   </Button>
                 </div>
               </Card>
@@ -184,7 +192,7 @@ export function HeroSectionView({
                   <div className="text-right">
                     <p className="tabular-nums text-3xl font-black text-[var(--color-accent)]">{cpuLoad}%</p>
                     <p className="font-ui text-xs uppercase tracking-[0.2em] text-[var(--color-muted-foreground)]">
-                      CPU_LOAD
+                      {cpuLoadLabel}
                     </p>
                   </div>
                 </div>

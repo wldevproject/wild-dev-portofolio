@@ -1,6 +1,19 @@
 import type { FormEvent } from "react";
 
 interface CvModalViewProps {
+  copy: {
+    authenticating: string;
+    emailPlaceholder: string;
+    fullDownload: string;
+    noticeLabel: string;
+    noticeText: string;
+    passwordPlaceholder: string;
+    publicDownload: string;
+    restrictedAccess: string;
+    restrictedHint: string;
+    systemOverride: string;
+    title: string;
+  };
   email: string;
   error: string;
   isOpen: boolean;
@@ -14,6 +27,7 @@ interface CvModalViewProps {
 }
 
 export function CvModalView({
+  copy,
   email,
   error,
   isOpen,
@@ -37,7 +51,7 @@ export function CvModalView({
           <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
           <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
           <span className="ml-2 font-mono text-xs uppercase tracking-widest text-[var(--color-accent)]">
-            SYSTEM_OVERRIDE // CV_EXPORT
+            {copy.systemOverride}
           </span>
           <button className="ml-auto font-mono text-[var(--color-accent)] hover:text-white" onClick={onClose}>
             [X]
@@ -47,11 +61,10 @@ export function CvModalView({
         <div className="mt-10 space-y-6">
           <div className="space-y-4">
             <h2 className="font-heading text-xl font-bold uppercase tracking-widest text-[var(--color-foreground)]">
-              CV DATA EXTRACTION
+              {copy.title}
             </h2>
             <p className="border-l-2 border-[var(--color-accent-tertiary)] pl-3 font-mono text-sm leading-relaxed text-[var(--color-muted-foreground)]">
-              <span className="text-[var(--color-accent-tertiary)]">NOTICE:</span> For privacy reasons, the public
-              CV export does not include personal phone numbers.
+              <span className="text-[var(--color-accent-tertiary)]">{copy.noticeLabel}</span> {copy.noticeText}
             </p>
           </div>
 
@@ -60,21 +73,21 @@ export function CvModalView({
               onClick={onPublicDownload}
               className="w-full border-2 border-[var(--color-accent-tertiary)] bg-[rgba(0,212,255,0.1)] px-4 py-3 font-ui text-sm uppercase tracking-widest text-[var(--color-accent-tertiary)] transition hover:bg-[var(--color-accent-tertiary)] hover:text-black hover:shadow-neon-tertiary"
             >
-              DOWNLOAD PUBLIC CV
+              {copy.publicDownload}
             </button>
           </div>
 
           <div className="flex items-center gap-4">
             <div className="h-px flex-1 bg-[var(--color-border)]" />
             <span className="font-ui text-xs uppercase tracking-widest text-[var(--color-muted-foreground)]">
-              RESTRICTED ACCESS
+              {copy.restrictedAccess}
             </span>
             <div className="h-px flex-1 bg-[var(--color-border)]" />
           </div>
 
           <form onSubmit={onSubmit} className="space-y-4 border border-[var(--color-border)] p-5">
             <p className="mb-4 font-mono text-xs text-[var(--color-accent-secondary)]">
-              Enter credentials for full data access (includes phone number):
+              {copy.restrictedHint}
             </p>
 
             <div className="space-y-3">
@@ -82,7 +95,7 @@ export function CvModalView({
                 <span className="absolute left-3 top-3 font-mono text-[var(--color-accent-secondary)]">{">"}</span>
                 <input
                   type="email"
-                  placeholder="AUTHORIZATION EMAIL"
+                  placeholder={copy.emailPlaceholder}
                   value={email}
                   onChange={(event) => onEmailChange(event.target.value)}
                   required
@@ -93,7 +106,7 @@ export function CvModalView({
                 <span className="absolute left-3 top-3 font-mono text-[var(--color-accent-secondary)]">{">"}</span>
                 <input
                   type="password"
-                  placeholder="PASSCODE"
+                  placeholder={copy.passwordPlaceholder}
                   value={password}
                   onChange={(event) => onPasswordChange(event.target.value)}
                   required
@@ -109,7 +122,7 @@ export function CvModalView({
               disabled={loading}
               className="w-full border border-[var(--color-accent-secondary)] bg-transparent px-4 py-2.5 font-ui text-sm uppercase tracking-widest text-[var(--color-accent-secondary)] transition hover:bg-[var(--color-accent-secondary)] hover:text-black focus:shadow-[0_0_15px_rgba(255,0,255,0.4)] focus:outline-none disabled:opacity-50"
             >
-              {loading ? "AUTHENTICATING..." : "DOWNLOAD FULL CV"}
+              {loading ? copy.authenticating : copy.fullDownload}
             </button>
           </form>
         </div>

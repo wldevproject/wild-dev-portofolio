@@ -5,10 +5,11 @@ import { downloadResumePdf } from "@/app/lib/generate-pdf";
 import { requestResumeAccess } from "@/app/lib/request-resume-access";
 
 interface UseCvModalFormOptions {
+  fallbackError: string;
   onClose: () => void;
 }
 
-export function useCvModalForm({ onClose }: UseCvModalFormOptions) {
+export function useCvModalForm({ fallbackError, onClose }: UseCvModalFormOptions) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,7 +35,7 @@ export function useCvModalForm({ onClose }: UseCvModalFormOptions) {
         setPassword("");
       }
     } catch (nextError) {
-      setError(nextError instanceof Error ? nextError.message : "System malfunction. Please try again.");
+      setError(nextError instanceof Error ? nextError.message : fallbackError);
     } finally {
       setLoading(false);
     }

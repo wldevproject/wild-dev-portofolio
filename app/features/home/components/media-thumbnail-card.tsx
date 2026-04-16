@@ -1,16 +1,11 @@
+"use client";
+
 import type { Project } from "@/app/data/resume-data";
+import { useSiteLanguage } from "@/app/features/home/context/site-language-context";
 
 interface MediaThumbnailCardProps {
   project: Project;
 }
-
-const categoryLabelMap: Record<Project["category"], string> = {
-  software: "software build",
-  design: "design",
-  "reel-vertical": "vertical reel",
-  "video-landscape": "landscape video",
-  youtube: "youtube",
-};
 
 const accentMap: Record<Project["category"], string> = {
   software: "var(--color-accent)",
@@ -21,8 +16,9 @@ const accentMap: Record<Project["category"], string> = {
 };
 
 export function MediaThumbnailCard({ project }: MediaThumbnailCardProps) {
+  const { copy } = useSiteLanguage();
   const accentColor = accentMap[project.category];
-  const platformLabel = project.platform ?? "Media";
+  const platformLabel = project.platform ?? copy.projects.platformFallback;
   const gear = project.gear ?? [];
   const software = project.software ?? [];
 
@@ -56,14 +52,14 @@ export function MediaThumbnailCard({ project }: MediaThumbnailCardProps) {
           <span
             className="shrink-0 border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.04)] px-3 py-1 font-ui text-[0.58rem] uppercase tracking-[0.28em] text-[var(--color-muted-foreground)]"
           >
-            {categoryLabelMap[project.category]}
+            {copy.projects.cardCategoryLabels[project.category]}
           </span>
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2">
           <div className="border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-3">
             <p className="font-ui text-[0.56rem] uppercase tracking-[0.3em] text-[var(--color-muted-foreground)]">
-              Gear
+              {copy.projects.gear}
             </p>
             <p className="mt-2 text-sm leading-6 text-foreground">
               {gear.length > 0 ? gear.join(", ") : "-"}
@@ -72,7 +68,7 @@ export function MediaThumbnailCard({ project }: MediaThumbnailCardProps) {
 
           <div className="border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)] px-4 py-3">
             <p className="font-ui text-[0.56rem] uppercase tracking-[0.3em] text-[var(--color-muted-foreground)]">
-              Apps
+              {copy.projects.apps}
             </p>
             <p className="mt-2 text-sm leading-6 text-foreground">
               {software.length > 0 ? software.join(", ") : "-"}
@@ -95,10 +91,10 @@ export function MediaThumbnailCard({ project }: MediaThumbnailCardProps) {
 
         <div className="flex items-center justify-between gap-4 border-t border-[rgba(255,255,255,0.06)] pt-4">
           <p className="font-ui text-[0.58rem] uppercase tracking-[0.28em] text-[var(--color-muted-foreground)]">
-            Klik untuk buka hasil asli
+            {copy.projects.linkHint}
           </p>
           <span className="font-ui text-[0.62rem] uppercase tracking-[0.28em]" style={{ color: accentColor }}>
-            open link
+            {copy.projects.openLink}
           </span>
         </div>
       </div>

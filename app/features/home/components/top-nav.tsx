@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { TopNavView } from "@/app/features/home/components/top-nav-view";
+import { useSiteLanguage } from "@/app/features/home/context/site-language-context";
 import { useTopNavState } from "@/app/features/home/hooks/use-top-nav-state";
 
 const CvModal = dynamic(
@@ -10,6 +11,7 @@ const CvModal = dynamic(
 );
 
 export function TopNav() {
+  const { copy, language, setLanguage } = useSiteLanguage();
   const {
     activeSection,
     closeCvModal,
@@ -25,17 +27,25 @@ export function TopNav() {
     toggleMenu,
   } = useTopNavState();
 
+  const localizedNavSections = navSections.map((section) => ({
+    ...section,
+    label: copy.nav.sections[section.id as keyof typeof copy.nav.sections] ?? section.label,
+  }));
+
   return (
     <>
       <TopNavView
         activeSection={activeSection}
         floatingHover={floatingHover}
         isScrolled={isScrolled}
+        language={language}
         menuOpen={menuOpen}
-        navSections={navSections}
+        navSections={localizedNavSections}
+        navText={copy.nav}
         onCloseMenu={closeMenu}
         onFloatingMouseEnter={handleFloatingMouseEnter}
         onFloatingMouseLeave={handleFloatingMouseLeave}
+        onLanguageChange={setLanguage}
         onMenuToggle={toggleMenu}
         onOpenCvModal={openCvModal}
       />
